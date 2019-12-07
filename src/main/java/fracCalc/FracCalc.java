@@ -20,7 +20,7 @@ public class FracCalc {
 			String fraction = firstInput.nextLine();
 			if (!fraction.equals("quit")) {
 				System.out.println(produceAnswer(fraction));
-			} else {				
+			} else {
 				System.out.println("Program terminated");
 				break;
 			}
@@ -42,30 +42,29 @@ public class FracCalc {
 	public static String produceAnswer(String input) {
 		// TODO: Implement this function to produce the solution to the input
 		Scanner math = new Scanner(input);
-		String statement = "'";
 		String firstOperand = math.next();
 		String operator = math.next();
 		String secondOperand = math.next();
-		String whole = "'whole:";
+		String result = "";		
+		String whole = "whole:";
 		String numerator = " numerator:";
-		String denominator = " denominator:";
+		String denominator = " denominator:";;
 		int x = secondOperand.indexOf("_");
 		int y = secondOperand.indexOf("/");
 		if (!secondOperand.contains("_") && !secondOperand.contains("/")) {
-			System.out.print(whole + secondOperand);
-			System.out.print(numerator + 0);
-			System.out.print(denominator + 1);
+			result += whole + secondOperand;
+			result += numerator + 0;
+			result += denominator + 1; 
 		} else if (!secondOperand.contains("_")) {
-			System.out.print(whole + 0);
-			System.out.print(numerator + secondOperand.substring(x + 1, y));
-			System.out.print(denominator + secondOperand.substring(y + 1, secondOperand.length()));
+			result += whole + 0;
+			result += numerator + secondOperand.substring(x + 1, y);
+			result += denominator + secondOperand.substring(y + 1, secondOperand.length());
 		} else {
-			System.out.print(whole + secondOperand.substring(0, x));
-			System.out.print(numerator + secondOperand.substring(x + 1, y));
-			System.out.print(denominator + secondOperand.substring(y + 1, secondOperand.length()));
+			result += (whole + secondOperand.substring(0, x));
+			result += (numerator + secondOperand.substring(x + 1, y));
+			result += (denominator + secondOperand.substring(y + 1, secondOperand.length()));
 		}
-		return statement;
-
+		return result;
 	}
 
 	// TODO: Fill in the space below with any helper methods that you think you will
