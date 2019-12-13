@@ -87,13 +87,13 @@ public class FracCalc {
 		int den3 = 0;
 		if (w1 < 0) {
 			num1 = (den1 * w1) - num1;
-		}else {
+		} else {
 			num1 = (den1 * w1) + num1;
-			
+
 		}
 		if (w2 < 0) {
 			num2 = (den2 * w2) - num2;
-		}else {
+		} else {
 			num2 = (den2 * w2) + num2;
 		}
 		if (operator.contentEquals("+")) {
@@ -111,7 +111,7 @@ public class FracCalc {
 				num3 = num1 - num2;
 				den3 = den2;
 			}
-				
+
 		} else if (operator.contentEquals("*")) {
 			num3 += (num1 * num2);
 			den3 += (den1 * den2);
@@ -124,7 +124,7 @@ public class FracCalc {
 			if (num2 == 0) {
 				return "Cannot divide by 0";
 			}
-			if (firstOperand.contentEquals("0")) {
+			if (firstOperand.contentEquals("0") || firstOperand.contentEquals("-0")) {
 				return "0";
 			}
 		}
@@ -144,6 +144,29 @@ public class FracCalc {
 		String numerator = String.valueOf(num3);
 		String denominator = String.valueOf(den3);
 		String answer = numerator + "/" + denominator;
+
+		if (num3 % 2 == 0 && den3 % 2 == 0) {
+			while (num3 % 2 == 0 && den3 % 2 == 0) {
+				answer = String.valueOf((num3 / 2) + "/" + (den3 / 2));
+				num3 /= 2;
+				den3 /= 2;
+				if (num3 % 2 != 0 && den3 % 2 != 0) {
+					break;
+				}
+			}
+		} else if (num3 % 3 == 0 && den3 % 3 == 0) {
+			while (num3 % 3 == 0 && den3 % 3 == 0) {
+				answer = String.valueOf((num3 / 3) + "/" + (den3 / 3));
+				num3 /= 3;
+				den3 /= 3;
+				if (num3 % 3 != 0 && den3 % 3 != 0) {
+					break;
+				}
+			}
+		}
+		if (firstOperand.contentEquals("0") || secondOperand.contentEquals("0")) {
+			answer = "0";
+		}
 		if (num3 == 0 && den3 == 0 && operator.contentEquals("+")) {
 			answer = String.valueOf(w1 + w2);
 		} else if (num3 == 0 && den3 == 0 && operator.contentEquals("-")) {
@@ -152,6 +175,53 @@ public class FracCalc {
 			answer = String.valueOf(w1 * w2);
 		} else if (num3 == 0 && den3 == 0 && operator.contentEquals("/")) {
 			answer = String.valueOf(w1 / w2);
+		} else if (num3 == 0 && den3 > 0) {
+			answer = "0";
+		}
+		int num4 = Math.abs(num3 % den3);
+		int den4 = Math.abs(den3);
+		int num6 = num4 / 3;
+		int den6 = den4 / 3;
+		if (Math.abs(num3) > den3) {
+			answer = String.valueOf((num3 / den3) + "_" + num4 + "/" + den4);
+			if (num4 == 0) {
+				answer = String.valueOf(num3 / den3);
+			} else if (num3 / den3 == 0) {
+				answer = String.valueOf((num4) + "/" + (den4));
+				if (firstOperand.contains("-") || secondOperand.contains("-")) {
+					answer = String.valueOf(-1 * (num4) + "/" + (den4));
+				}
+			} else if (num4 % 2 == 0 && den4 % 2 == 0) {
+				while (num4 % 2 == 0 && den4 % 2 == 0) {
+					answer = String.valueOf((num3 / den3) + "_" + (num4 / 2) + "/" + (den4 / 2));
+					num4 /= 2;
+					den4 /= 2;
+					if (num4 % 2 != 0 || den4 % 2 != 0) {
+						break;
+					}
+				}
+
+			} else if (num4 % 3 == 0 && den4 % 3 == 0) {
+				while (num4 % 3 == 0 && den4 % 3 == 0) {
+					answer = String.valueOf((num3 / den3) + "_" + (num4 / 3) + "/" + (den4 / 3));
+					num4 /= 3;
+					den4 /= 3;
+					if (num4 % 3 != 0 || den4 % 3 != 0) {
+						break;
+					}
+				}
+
+			}
+
+		}
+
+		if (den3 == 1) {
+			answer = String.valueOf(num3);
+		} else if (den3 == -1) {
+			answer = String.valueOf(num3 * -1);
+		}
+		if (num3 == den3) {
+			answer = "1";
 		}
 
 		return answer;
